@@ -1,0 +1,69 @@
+Bucket in aws account A
+
+Login in account A
+Create s3 bucket in account A
+Create s3 policy to access the buccket.
+
+Exmaple:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListAllMyBuckets",
+            "Resource": "arn:aws:s3:::Bucket-v1"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "arn:aws:s3:::Bucket-v1"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::Bucket-v1/*"
+        }
+    ]
+}
+
+
+create s3 Role in account A
+Role name: cross-account-godigit
+Edit trust relation:
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::AWS-account-B:root",
+                    "arn:aws:iam::AWS-account-B:role/Account-B-role_name"
+                ]
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {}
+        }
+    ]
+}
+
+
+create role inaccount B
+Add inline policy.
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "sts:AssumeRole",
+        "Resource": "arn:aws:iam::AWS-Account-A:role/Account-A-role_name"
+    }
+}
+
