@@ -67,3 +67,19 @@ Add inline policy.
     }
 }
 
+
+
+#### in s3 bucket : s3> permission> edit bucket policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::AWS-account-B:role/Account-B-role_name"
+            }
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::godigit-v1/*"
+        }
+    ]
+}
